@@ -1,82 +1,100 @@
 'use client';
-
 import React, { useState } from 'react'
 
 const TodoList = () => {
 
-    // let count = 0;
+    // let count =0;  //update krte k liye koi vapue
 
-    // const [count, setCount] = useState(0);   exmple hai
+    // const [count, setCount] = useState(0);  //count krne ke liye
+
+    const [taskList, setTaskList] = useState([]);  //larklist read ke liye settasklist update karne ke liye
 
 
-    const [taskList, setTaskList] = useState([]);
+    const addNewTask =(e) =>{
+        
+        if (e.code === 'Enter'){
+            if(!e.target.value){
+                alert('Please enter a task to add');
+                return;  //return funciton hai ye aage ki cheezo ko terminate kar deta hai
+            }
 
-    // key press Event
 
-    const addNewTask = (e) => {
-
-        if(!e.target.value){
-            alert('please enter any task to add')
-        } return;
-
-        if (e.code === 'Enter') {
             console.log(e.target.value);
 
-            const newTask = { text: e.target.value, completed: false };
+            const newTask = { text:e.target.value, completed:false}; //add krne ke liye new array
+            setTaskList([ newTask, ...taskList ]); /// newtask tasklist ko aage piche bhi likh sakte hai ... 3dots new array ko add karne me help karta h ...jsx ka spread operator hai
 
-            setTaskList([newTask, ...taskList]);
-
-            e.target.value = '';
+            e.target.value ="";  // isse jo likhenge fir enter karenge to uski vali console pe milegi
+            
         }
-
-
-
+        // console.log(e.code);  //keyme type pta chalega code me key ka naam pta chalega space tab enter ye sab kon si press hui hai pta chal jayega
+        
+        
     }
 
-    return (
-        <div className='bg-gray-300 h-screen pt-10'>
+    // /delete krne ke liye 
 
-            <div className='container mx-auto rounded-lg bg-white border'>
+    const deleteTask =(index) => {
+        console.log(index);
+        
+        const temp = taskList;
+        temp.splice(index,1);
+        setTaskList([...temp]);
+    };
+      
+// update kre ya complete kre 
 
-                <div className='p-4 border-b-2'>
+    const updateTask = (index) => {
 
-                    {/* <h1 className='text-3xl'>{count}</h1> example hai */}
+        const temp = taskList;
+        temp[index].completed = !temp[index].completed;
+        setTaskList([...temp]);
+    }
 
-                    {/* <button onClick={ () => {setCount(count+1); console.log(count) }}>Add count</button> */}
 
-                    <input
+return (
+    <div className='bg-gray-300 h-screen pt-10'>
 
-                        onKeyDown={addNewTask}
+        <div className='container mx-auto rounded-lg bg-white border'>
+            
+            <div className='p-4 border-b-2'>
+                {/* <h1 className='text-3xl'>{count}</h1> */}
+                {/* <button onClick ={()=>{setCount(count+1); console.log(count);}}  >Add count</button> */}
+                <input
+                    onKeyDown={addNewTask}  //jsx me javascript insert krna hai to {} curly bracket lgate h important
+                    placeholder='Enter a Task to add in your todolist' type="text"
+                    className='px-3 py-2 rounded w-full bg-gray-200' />
+            </div>
+            <div className='p-4'>
+                {
+                    taskList.map((task,index) => {  //key niche nhi likhenge tb bhi chalega
+                        return <div key={index} className='rounded mb-4 p-4 border shadow'>   
 
-                        placeholder='Enter a Task to add in your todolist'
-                        type="text"
-                        className='px-3 py-2 rounded w-full bg-gray-200'
-                    />
 
-                </div>
 
-                <div className='p-4'>
+                        {task.completed ? (
+                            <p className='bg-green-700 text-white w-fit rounded-full px-2'>Completely</p>
+                        ) : (
+                            <p className='bg-yellow-700 text-white w-fit rounded-full px-2'>Pending</p>
+                        ) }
 
-                    {
 
-                        taskList.map((task, index) => {
-                            return <div key={index} className='rounded mb-4 p-4  border shadow'>
-
-                                <p className='text-xl '>{task.text}</p>
-
-                                <div className='mt-5 flex gap-5'>
-                                    <button className='bg-red-500 text-white rounded-full px-3 py-1'>Delete</button>
-                                    <button className='bg-blue-500 text-white rounded-full px-3 py-1'>Complete</button>
-                                </div>
+                            <p className='text-xl'>{task.text}</p>
+                            <div className='mt-5 flex gap-5'>
+                                <button onClick={() => {deleteTask(index) }} className='bg-red-500 text-white rounded-full px-3 py-1'>Delete</button>
+                                <button onClick={() => {updateTask (index)}} className='bg-blue-500 text-white rounded-full px-3 py-1'>Complete</button>
                             </div>
-                        })
-                    }
-                </div>
+
+                    </div>
+                     })  //anfn likhne se (()=>{}) ye sab ek sath ban jata hai
+                }
 
             </div>
 
         </div>
-    )
+    
+    </div>  //statemanagement pop up dikhata h bina page load kiye 
+  )
 }
 
 export default TodoList;
