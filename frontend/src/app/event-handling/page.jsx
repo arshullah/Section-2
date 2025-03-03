@@ -23,7 +23,7 @@ const EventHandling = () => {
 
 
             <div className='container mx-auto my-5 '>
-                <h1 className='mt-4 font-bold text-3xl text-center'></h1>
+                <h1 className='mt-4 font-bold text-3xl text-center'> EventHandling</h1>
 
                 <button
 
@@ -40,6 +40,17 @@ const EventHandling = () => {
                 {/* file read krne ka tarika */}
 
                 <input type='file' onChange={previewImange} />
+
+                <input
+                onChange={()=>{console.log('value was changed');
+                }}
+                className='border p-3 w-full mt-5'
+                type="text" />
+                <input
+                onChange={()=>{console.log('value was changed');
+                }}
+                className='border p-3 w-full mt-5'
+                type="text" />
 
             </div>
         </div>
