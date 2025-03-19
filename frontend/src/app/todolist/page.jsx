@@ -1,4 +1,5 @@
 'use client';
+import { IconPencil, IconTrash } from '@tabler/icons-react';
 import React, { useState } from 'react'
 
 const TodoList = () => {
@@ -15,7 +16,7 @@ const TodoList = () => {
         if (e.code === 'Enter') {
             if (!e.target.value) {
                 alert('Please enter a task to add');
-                return; 
+                return;
 
 
             }
@@ -66,21 +67,25 @@ const TodoList = () => {
                         placeholder='Enter a Task to add in your todolist' type="text"
                         className='px-3 py-2 rounded w-full bg-gray-200' />
                 </div>
-                <div className='p-4'>
+                <div className='p-5 h-[60vh] overflow-y-auto'>
                     {
                         taskList.map((task, index) => {  //key niche nhi likhenge tb bhi chalega
-                            return <div key={index} className='rounded mb-4 p-4 border shadow'>
+                            return <div key={index} className='flex justify-between items-center rounded shadow mb-3 p-4 text-white bg-blue-900 '>
 
                                 {task.completed ? (
-                                    <p className='bg-green-700 text-white w-fit rounded-full px-2'>Completely</p>
+                                    <p className='bg-green-700 text-white w-fit rounded-full px-2 text-sm'>Done👍</p>
                                 ) : (
-                                    <p className='bg-yellow-700 text-white w-fit rounded-full px-2'>Pending</p>
+                                    <p className='bg-yellow-700 text-white w-fit rounded-full px-2 text-sm'>Not Done❔</p>
                                 )}
 
                                 <p className='text-xl'>{task.text}</p>
-                                <div className='mt-5 flex gap-5'>
-                                    <button onClick={() => { deleteTask(index) }} className='bg-red-500 text-white rounded-full px-3 py-1'>Delete</button>
-                                    <button onClick={() => { updateTask(index) }} className='bg-blue-500 text-white rounded-full px-3 py-1'>Complete</button>
+                                <div className='flex gap-5'>
+                                    <button onClick={() => { deleteTask(index) }} className='bg-blue-500 text-white rounded-full px-3 py-1'>
+                                        <IconTrash />
+                                    </button>
+                                    <button onClick={() => { updateTask(index) }} className='bg-green-500 text-white rounded-full px-3 py-1'>
+                                        < IconPencil />
+                                    </button>
                                 </div>
 
                             </div>
@@ -88,7 +93,7 @@ const TodoList = () => {
                     }
 
                 </div>
-
+<p className='text-lg text-center'>{taskList.filter(t => !t.completed).length} task pending</p>
             </div>
 
         </div>  //statemanagement pop up dikhata h bina page load kiye 
