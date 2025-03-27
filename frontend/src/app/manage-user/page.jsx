@@ -1,5 +1,6 @@
 'use client';
 import axios from 'axios'
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
 
@@ -58,6 +59,12 @@ const ManageUser = () => {
                                                 className='bg-red-500 text-white px-2 py-1 rounded'
                                             >Delete</button>
                                         </td>
+                                        <td>
+                                            <Link
+                                                href={'/update-user/' + user._id}
+                                                className='bg-blue-500 text-white px-2 py-1 rounded'
+                                            >Update</Link>
+                                        </td>
                                     </tr>
                                 )
                             })
@@ -70,4 +77,4 @@ const ManageUser = () => {
     )
 }
 
-export default ManageUser;          
+export default ManageUser;
